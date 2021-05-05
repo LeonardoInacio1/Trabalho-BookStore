@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController, ToastController } from '@ionic/angular';
+import { Livros } from './livros.model';
+import { LivrosService } from './livros.service';
 
 @Component({
   selector: 'app-livros',
@@ -7,9 +10,78 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LivrosPage implements OnInit {
 
-  constructor() { }
+  livros: Livros[];
+
+  constructor(
+    private alertController: AlertController,
+    private toastController: ToastController,
+    private livrosService: LivrosService
+  ) { }
+
+  ionViewWillEnter() {
+    console.log('ionViewWillEnter');
+    this.listar();
+  }
+
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter');
+  }
+
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave');
+  }
+
+  ionViewDidLeave(){
+    console.log('ionViewDidLeave');
+  }
 
   ngOnInit() {
+  }
+
+  listar() {
+    this.livrosService
+      .getLivros()
+      .subscribe(
+        (dados) => {
+          this.livros = dados;
+        },
+        (erro) => {
+          console.error(erro);
+        }
+      );
+  }
+
+  confirmarExclusao(livro: Livros) {
+    this.alertController.create({
+      header: 'Confirmação de exclusão',
+      message: `Deseja excluir o livro ${livro.titulo}?`,
+      buttons: [
+        {
+          text: 'Sim',
+          handler: () => this.excluir(livro)
+        },
+        {
+          text: 'Não',
+        }
+      ]
+    }).then(alerta => alerta.present());
+  }
+
+  private excluir(livro: Livros) {
+    this.livrosService
+      .excluir(livro.id)
+      .subscribe(
+        () => this.listar(),
+        (erro) => {
+          console.error(erro);
+          this.toastController.create({
+            message: `Não foi possível excluir o livro ${livro.titulo}`,
+            duration: 5000,
+            keyboardClose: true,
+            color: 'danger'
+          }).then(t => t.present());
+        }
+      );
   }
 
 }
