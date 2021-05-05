@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Cadastro de Livros</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form [formGroup]="autoresForm">
+      <ion-item>
+          <ion-label position="floating">Título: </ion-label>
+          <ion-input formControlName="titulo"
+                     type="text">
+          </ion-input>
+          <ion-text color="danger" *ngIf="titulo.errors">
+            <small *ngIf="titulo.errors.required && (titulo.dirty || nome.touched)">
+                O campo Título é obrigatório
+            </small>
+            <small *ngIf="titulo.errors.minlength && (titulo.dirty || titulo.touched)">
+                O campo Titulo deve conter no mínimo {{titulo.errors.minlength.requiredLength}} caracteres
+            </small>
+          </ion-text>  
+      </ion-item>     
+      <ion-item>
+          <ion-label position="floating">ISBN: </ion-label>
+          <ion-input formControlName="isbn"
+                   type="number">
+          </ion-input>
+          <ion-text color="danger" *ngIf="isbn.errors">
+            <small *ngIf="isbn.errors.required && (isbn.dirty || isbn.touched)">
+                O campo ISBN é obrigatório
+            </small>
+            <small *ngIf="isbn.errors.minlength && (isbn.dirty || isbn.touched)">
+                O campo ISBN deve conter no mínimo {{isbn.errors.minlength.requiredLength}} caracteres
+            </small>
+            <small *ngIf="isbn.errors.minlength && (isbn.dirty || isbn.touched)">
+              O campo ISBN deve ser maior que 0 {{isbn.errors.minlength.requiredLength}} caracteres
+          </small>
+          </ion-text>  
+

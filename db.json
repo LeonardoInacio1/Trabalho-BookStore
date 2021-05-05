@@ -1,0 +1,16 @@
+{
+  "autores": [
+    {
+      "nome": "Martin",
+      "dataNasicmento": "1970-02-02",
+      "genero": "F",
+      "id": 1
+    },
+    {
+      "nome": "Martin Fowler",
+      "dataNascimento": "1980-02-02",
+      "genero": "M",
+      "id": 2
+    }
+  ]
+}

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastController} from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Autor } from '../autor.model';
 import { AutorService } from '../autor.service';
@@ -44,25 +45,34 @@ export class AutoresCadastroComponent implements OnInit {
   autoresForm: FormGroup;
 
   constructor(
+    private toastController: ToastController,
     private activatedRoute: ActivatedRoute,
     private autorService: AutorService,
     private router: Router,
   ) {
-    const id = parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
-    
-    let autor;
-    if (id) {
-      autor = this.autorService.getAutor(id);
-      this.autorId = id;
-    } else {
-      autor = {
-        id: null,
-        nome: '',
-        dataNascimento: null,
-        genero: Genero.FEMININO,
-      };
-    }
+    let autor = {
+      id: null,
+      nome: '',
+      dataNascimento: null,
+      genero: Genero.FEMININO,
+    };
+    this.initializaFormulario(autor);
+  }
 
+  ngOnInit() {
+    const id = parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
+    if(!isNaN(id)){
+      this.autorId = id;
+      this.autorService
+      .getAutor(id)
+      .subscribe((autor) => {
+      this.initializaFormulario(autor);
+      });
+    }
+    
+  }
+
+  initializaFormulario(autor: Autor) {
     this.autoresForm = new FormGroup({
       nome: new FormControl(autor.nome, [
         Validators.required, 
@@ -73,12 +83,22 @@ export class AutoresCadastroComponent implements OnInit {
       genero: new FormControl(autor.genero, Validators.required)
     })
   }
-
-  ngOnInit() {}
-
+  
   salvar() {
-    const autor = {...this.autoresForm.value, id: this.autorId}
-    this.autorService.salvar(autor);
+    const autor: Autor = {...this.autoresForm.value, id: this.autorId}
+    this.autorService.salvar(autor).subscribe(
+      () => this.router.navigate(['autores']),
+      (erro) => {
+        console.error(erro);
+        this.toastController.create({
+          message: `Não foi possível salvar o autor ${autor.nome}`,
+          duration: 5000,
+          keyboardClose: true,
+          color: 'danger'
+        }).then(t => t.present());
+      }
+    );
+
     this.router.navigate(['autores']);
   }
 
