@@ -5,6 +5,6 @@ export class Livros {
     titulo: string;
     isbn: number;
     paginas: number;
-    autores: Autor;
+    autor: Autor;
     preco: number; 
 }
