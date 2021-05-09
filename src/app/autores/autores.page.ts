@@ -19,20 +19,7 @@ export class AutoresPage implements OnInit {
   ) { }
 
   ionViewWillEnter() {
-    console.log('ionViewWillEnter');
     this.listar();
-  }
-
-  ionViewDidEnter() {
-    console.log('ionViewDidEnter');
-  }
-
-  ionViewWillLeave() {
-    console.log('ionViewWillLeave');
-  }
-
-  ionViewDidLeave(){
-    console.log('ionViewDidLeave');
   }
 
   ngOnInit() {}
@@ -43,7 +30,7 @@ export class AutoresPage implements OnInit {
       .subscribe(
         (dados) => {
           this.autores = dados;
-        }, 
+        },
         (erro) => {
           console.error(erro);
         }
@@ -52,7 +39,7 @@ export class AutoresPage implements OnInit {
 
   confirmarExclusao(autor: Autor) {
     this.alertController.create({
-      header: 'Confirmação de exclusão', 
+      header: 'Confirmação de exclusão',
       message: `Deseja excluir o autor ${autor.nome}?`,
       buttons: [
         {

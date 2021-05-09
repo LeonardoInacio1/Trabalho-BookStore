@@ -4,8 +4,9 @@ import { ToastController} from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Livros } from '../livros.model';
 import { LivrosService } from '../livros.service';
-
-
+import { AutorService } from 'src/app/autores/autor.service';
+import { Autor } from 'src/app/autores/autor.model';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-livros-cadastro',
   templateUrl: './livros-cadastro.component.html',
@@ -14,14 +15,16 @@ import { LivrosService } from '../livros.service';
 export class LivrosCadastroComponent implements OnInit {
   livrosId:number;
   livrosForm: FormGroup;
+  autores: Autor[];
 
   constructor(
     private toastController: ToastController,
     private activatedRoute: ActivatedRoute,
     private livrosService: LivrosService,
     private router: Router,
+    private autorService: AutorService
   ){
-    let livros = {
+    let livro = {
       id: null,
       titulo: '',
       isbn: 0,
@@ -29,11 +32,13 @@ export class LivrosCadastroComponent implements OnInit {
       autor: null,
       preco: 0
     };
-    this.initializaFormulario(livros);
+    this.initializaFormulario(livro);
    }
 
   ngOnInit() {
+    this.autorService.getAutores().subscribe( autor => this.autores = autor)
     const id = parseInt(this.activatedRoute.snapshot.paramMap.get('id'));
+
     if(!isNaN(id)){
       this.livrosId = id;
       this.livrosService
@@ -42,16 +47,21 @@ export class LivrosCadastroComponent implements OnInit {
       this.initializaFormulario(livros);
       });
     }
+
   }
 
-  initializaFormulario(Livros: Livros) {
+  initializaFormulario(livro: Livros) {
     this.livrosForm = new FormGroup({
-      nome: new FormControl(Livros.titulo, [
-        Validators.required, 
+      titulo: new FormControl(livro.titulo, [
+        Validators.required,
         Validators.minLength(3),
-        Validators.maxLength(150),  
-      ]) 
-    })
+        Validators.maxLength(150),
+      ]),
+      isbn: new FormControl(livro.isbn),
+      paginas: new FormControl(livro.paginas),
+      autor: new FormControl(livro.autor),
+      preco: new FormControl(livro.preco),
+    });
   }
 
   salvar() {
@@ -73,7 +83,23 @@ export class LivrosCadastroComponent implements OnInit {
   }
 
   get titulo(){
-    return this.livrosForm.get('nome');
+    return this.livrosForm.get('titulo');
+  }
+
+  get isbn() {
+    return this.livrosForm.get('isbn');
+  }
+
+  get paginas() {
+    return this.livrosForm.get('paginas');
+  }
+
+  get autor() {
+    return this.livrosForm.get('autor');
+  }
+
+  get preco() {
+    return this.livrosForm.get('preco');
   }
 
 }

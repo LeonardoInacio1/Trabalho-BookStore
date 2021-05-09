@@ -12,5 +12,20 @@
       "genero": "M",
       "id": 2
     }
+  ],
+  "livros": [
+    {
+      "titulo": "teste",
+      "isbn": "1321",
+      "paginas": "1",
+      "autor": {
+        "nome": "Martin",
+        "dataNasicmento": "1970-02-02",
+        "genero": "F",
+        "id": 1
+      },
+      "preco": "132",
+      "id": "1"
+    }
   ]
 }

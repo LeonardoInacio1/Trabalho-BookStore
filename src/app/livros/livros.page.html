@@ -10,7 +10,7 @@
 <ion-content>
   <ion-list>
     <ion-item *ngFor="let livro of livros">
-      <ion-label>{{livros.title}}</ion-label>
+      <ion-label>{{livro.titulo}}</ion-label>
       <ion-buttons>
         <ion-button color="primary" [routerLink]="['edicao', livro.id]">
           <ion-icon name="create" slot="icon-only"></ion-icon>
