@@ -9,17 +9,49 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let livro of livros">
-      <ion-label>{{livro.titulo}}</ion-label>
-      <ion-buttons>
-        <ion-button color="primary" [routerLink]="['edicao', livro.id]">
-          <ion-icon name="create" slot="icon-only"></ion-icon>
-        </ion-button>
-        <ion-button color="primary" (click)="confirmarExclusao(livro)">
-          <ion-icon name="trash"  slot="icon-only"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-item>
+    <ion-item-sliding *ngFor="let livro of livros">
+
+      <ion-item>
+        <ion-thumbnail slot="start">
+          <ion-img [src]="livro.imagem"></ion-img>
+        </ion-thumbnail>
+        <ion-label class="ion-text-wrap">
+          <ion-text>
+            <h1>{{livro.titulo}}</h1>
+          </ion-text>
+          <ion-text>
+            <p>Autor(es):{{livro.autor.nome}}</p>
+          </ion-text>
+          <ion-text>
+            <p>ISBN: {{livro.isbn}}</p>
+
+          </ion-text>
+          <ion-text>
+            <p>Pag: {{livro.paginas}}</p>
+          </ion-text>
+        </ion-label>
+
+        <ion-label slot="end" class="ion-text-wrap">
+          <ion-text>
+            <h2>R$ {{livro.preco}}</h2>
+          </ion-text>
+        </ion-label>
+
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option (click)="confirmarExclusao(livro)">
+          <ion-icon name= "trash-bin-outline" slot= "icon-only"> </ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+      <ion-item-options side= "start">
+        <ion-item-option [routerLink]="['edicao', livro.id]">
+          <ion-icon name= "pencil-outline" slot= "icon-only"> </ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
   </ion-list>
 
   <ion-fab vertical="bottom" horizontal="end">

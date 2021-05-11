@@ -26,6 +26,7 @@ export class LivrosCadastroComponent implements OnInit {
   ){
     let livro = {
       id: null,
+      imagem: '',
       titulo: '',
       isbn: 0,
       paginas: 0,
@@ -47,20 +48,20 @@ export class LivrosCadastroComponent implements OnInit {
       this.initializaFormulario(livros);
       });
     }
-
   }
 
   initializaFormulario(livro: Livros) {
     this.livrosForm = new FormGroup({
+      imagem: new FormControl(livro.imagem),
       titulo: new FormControl(livro.titulo, [
         Validators.required,
         Validators.minLength(3),
         Validators.maxLength(150),
       ]),
-      isbn: new FormControl(livro.isbn),
-      paginas: new FormControl(livro.paginas),
-      autor: new FormControl(livro.autor),
-      preco: new FormControl(livro.preco),
+      isbn: new FormControl(livro.isbn, [Validators.required]),
+      paginas: new FormControl(livro.paginas, [Validators.required]),
+      autor: new FormControl(livro.autor, [Validators.required]),
+      preco: new FormControl(livro.preco, [Validators.required]),
     });
   }
 
@@ -84,6 +85,10 @@ export class LivrosCadastroComponent implements OnInit {
 
   get titulo(){
     return this.livrosForm.get('titulo');
+  }
+
+  get imagem(){
+    return this.livrosForm.get('imagem');
   }
 
   get isbn() {

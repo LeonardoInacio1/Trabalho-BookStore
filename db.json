@@ -11,21 +11,37 @@
       "dataNascimento": "1980-02-02",
       "genero": "M",
       "id": 2
+    },
+    {
+      "nome": "Robert Martin",
+      "dataNascimento": "1970-05-11T19:58:13.625-03:00",
+      "genero": "M",
+      "id": 3
     }
   ],
   "livros": [
     {
-      "titulo": "teste",
-      "isbn": "1321",
-      "paginas": "1",
+      "imagem": "https://martinfowler.com/books/refact2.jpg",
+      "titulo": "Refactoring",
+      "isbn": 123,
+      "paginas": 120,
       "autor": {
-        "nome": "Martin",
-        "dataNasicmento": "1970-02-02",
-        "genero": "F",
-        "id": 1
+        "nome": "Martin Fowler",
+        "dataNascimento": "1980-02-02",
+        "genero": "M",
+        "id": 2
       },
-      "preco": "132",
-      "id": "1"
+      "preco": 100,
+      "id": 3
+    },
+    {
+      "imagem": "https://images-na.ssl-images-amazon.com/images/I/41yafGMO+rL._SX376_BO1,204,203,200_.jpg",
+      "titulo": "Clean Code",
+      "isbn": 9780132350884,
+      "paginas": 431,
+      "autor": 3,
+      "preco": 95.17,
+      "id": 4
     }
   ]
 }

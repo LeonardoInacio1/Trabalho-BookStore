@@ -10,6 +10,18 @@
   <form [formGroup]="livrosForm">
 
     <ion-item>
+      <ion-label position="floating">Imagem(URL): </ion-label>
+      <ion-input formControlName="imagem" type="text">
+      </ion-input>
+
+      <!-- <ion-text color="danger" *ngIf="titulo.errors">
+        <small *ngIf="titulo.errors.required && (titulo.dirty || titulo.touched)">
+          O campo título é obrigatório
+        </small>
+      </ion-text> -->
+    </ion-item>
+
+    <ion-item>
       <ion-label position="floating">Título: </ion-label>
       <ion-input formControlName="titulo" type="text">
       </ion-input>
@@ -58,9 +70,15 @@
       <ion-label position="floating">Autor</ion-label>
 
       <ion-select formControlName="autor">
-        <ion-select-option *ngFor="let autor of autores" [value]="autor">
+        <ion-select-option *ngFor="let autor of autores" [value]="autor.id">
           {{autor.nome}}
         </ion-select-option>
+
+        <ion-text color="danger" *ngIf="autor.errors">
+          <small *ngIf="autor.errors.required && (autor.dirty || autor.touched)">
+            O campo Autor é obrigatório
+          </small>
+        </ion-text>
       </ion-select>
     </ion-item>
 
